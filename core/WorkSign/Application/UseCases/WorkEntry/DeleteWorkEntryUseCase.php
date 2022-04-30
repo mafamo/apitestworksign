@@ -16,11 +16,13 @@ class DeleteWorkEntryUseCase
      * Delete a WorkEntry
      *
      * @param integer $id
-     * @return void
+     * @return boolean
      */
-    public function __invoke(int $id): void
+    public function __invoke(int $id): bool
     {
         $workEntryId = new WorkEntryId($id);
         $this->repository->delete($workEntryId);
+
+        return true;
     }
 }

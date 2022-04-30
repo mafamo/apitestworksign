@@ -2,9 +2,10 @@
 
 namespace Core\WorkSign\Application\UseCases\WorkEntry;
 
-use App\Models\WorkEntry;
+
 use Core\WorkSign\Domain\WorkEntry\Contracts\WorkEntryRepositoryInterface;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryId;
+use Core\WorkSign\Domain\WorkEntry\WorkEntry;
 
 class GetWorkEntryByIdUseCase
 {
@@ -17,7 +18,7 @@ class GetWorkEntryByIdUseCase
      * Get a WorkEntry by id
      *
      * @param integer $id
-     * @return ?WorkEntry
+     * @return WorkEntry|null
      */
     public function __invoke(int $id): ?WorkEntry
     {

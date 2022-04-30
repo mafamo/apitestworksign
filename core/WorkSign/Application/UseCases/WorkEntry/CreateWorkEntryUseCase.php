@@ -26,13 +26,13 @@ class CreateWorkEntryUseCase
      * @param integer $user_id
      * @param string $start_date
      * @param string|null $end_date
-     * @return void
+     * @return WorkEntryId
      */
     public function __invoke(
         int $user_id,
         string $start_date,
         ?string $end_date = null
-    ): void {
+    ): WorkEntryId {
         $workEntry = WorkEntry::create(
             id: new WorkEntryId(),
             user_id: new WorkEntryUserId($user_id),
@@ -42,6 +42,7 @@ class CreateWorkEntryUseCase
             updated_at: new WorkEntryUpdatedAt((new DateTime())->format('Y-m-d H:i:s')),
             deleted_at: new WorkEntryDeletedAt()
         );
-        $this->repository->create($workEntry);
+
+        return $this->repository->create($workEntry);
     }
 }
