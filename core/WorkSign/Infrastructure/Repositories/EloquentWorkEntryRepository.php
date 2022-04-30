@@ -82,7 +82,7 @@ class EloquentWorkEntryRepository implements WorkEntryRepositoryInterface
     {
         $eloquentWorkEntryToDelete = $this->eloquentWorkEntryModel;
 
-        return $eloquentWorkEntryToDelete->delete();
+        return $eloquentWorkEntryToDelete->findOrFail($id->value())->delete();
     }
 
     /**
