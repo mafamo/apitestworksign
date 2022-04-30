@@ -9,7 +9,7 @@ final class WorkEntryEndDate
 {
     private ?DateTime $value;
 
-    public function __construct(?string $end_date)
+    public function __construct(?string $end_date = null)
     {
         try {
             $this->value = is_null($end_date) ? null : new DateTime($end_date);

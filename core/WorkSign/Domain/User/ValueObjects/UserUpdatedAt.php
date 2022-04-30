@@ -9,7 +9,7 @@ final class UserUpdatedAt
 {
     private ?DateTime $value;
 
-    public function __construct(?string $updated_at)
+    public function __construct(?string $updated_at = null)
     {
         try {
             $this->value = is_null($updated_at) ? null : new DateTime($updated_at);

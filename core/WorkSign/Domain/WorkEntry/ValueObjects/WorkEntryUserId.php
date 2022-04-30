@@ -8,7 +8,7 @@ final class WorkEntryUserId
 {
     private int $value;
 
-    public function __construct(private int $user_id)
+    public function __construct(int $user_id)
     {
         $this->validate($user_id);
         $this->value = $user_id;

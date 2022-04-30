@@ -9,7 +9,7 @@ final class WorkEntryDeletedAt
 {
     private ?DateTime $value;
 
-    public function __construct(?string $deleted_at)
+    public function __construct(?string $deleted_at = null)
     {
         try {
             $this->value = is_null($deleted_at) ? null : new DateTime($deleted_at);

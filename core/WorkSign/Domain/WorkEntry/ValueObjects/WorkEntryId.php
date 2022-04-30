@@ -8,7 +8,7 @@ final class WorkEntryId
 {
     private ?int $value;
 
-    public function __construct(?int $id)
+    public function __construct(?int $id = null)
     {
         if (!is_null($id)) {
             $this->validate($id);
