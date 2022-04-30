@@ -34,9 +34,9 @@ interface UserRepositoryInterface
      * Create a user
      *
      * @param User $user
-     * @return boolean
+     * @return UserId
      */
-    public function create(User $user): bool;
+    public function create(User $user): UserId;
 
     /**
      * Delete a user by id
