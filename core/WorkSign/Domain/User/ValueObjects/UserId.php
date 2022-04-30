@@ -6,12 +6,14 @@ use InvalidArgumentException;
 
 final class UserId
 {
-    private int $value;
+    private ?int $value;
 
-    public function __construct(private int $id)
+    public function __construct(?int $id)
     {
-        $this->validate($id);
-        $this->value = $id;
+        if (!is_null($id)) {
+            $this->validate($id);
+            $this->value = $id;
+        }
     }
 
     /**
@@ -38,9 +40,9 @@ final class UserId
     /**
      * Get Value
      *
-     * @return integer
+     * @return integer|null
      */
-    public function value(): int
+    public function value(): ?int
     {
         return $this->value;
     }

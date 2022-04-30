@@ -7,12 +7,12 @@ use InvalidArgumentException;
 
 final class WorkEntryEndDate
 {
-    private DateTime $value;
+    private ?DateTime $value;
 
-    public function __construct(string $end_date)
+    public function __construct(?string $end_date)
     {
         try {
-            $this->value = new DateTime($end_date);
+            $this->value = is_null($end_date) ? null : new DateTime($end_date);
         } catch (\Throwable $th) {
             throw new InvalidArgumentException(
                 sprintf('%s does not allow the value %s', self::class, $end_date)
@@ -23,10 +23,10 @@ final class WorkEntryEndDate
     /**
      * Get Value
      *
-     * @return string
+     * @return string|null
      */
-    public function value(): string
+    public function value(): ?string
     {
-        return $this->value->format('Y-m-d H:i:s');
+        return $this->value?->format('Y-m-d H:i:s');
     }
 }

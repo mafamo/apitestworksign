@@ -5,7 +5,7 @@ namespace Core\WorkSign\Domain\User\Contracts;
 use Core\WorkSign\Domain\User\User;
 use Core\WorkSign\Domain\User\ValueObjects\UserId;
 
-interface UserRepositoryContract
+interface UserRepositoryInterface
 {
     /**
      * Get user by id

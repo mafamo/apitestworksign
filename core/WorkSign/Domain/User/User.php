@@ -19,16 +19,16 @@ class User
      * @param UserName $name
      * @param UserEmail $email
      * @param UserCreatedAt $created_at
-     * @param UserUpdatedAt|null $updated_at
-     * @param UserDeletedAt|null $deleted_at
+     * @param UserUpdatedAt $updated_at
+     * @param UserDeletedAt $deleted_at
      */
     public function __construct(
         private UserId $id,
         private UserName $name,
         private UserEmail $email,
         private UserCreatedAt $created_at,
-        private ?UserUpdatedAt $updated_at,
-        private ?UserDeletedAt $deleted_at
+        private UserUpdatedAt $updated_at,
+        private UserDeletedAt $deleted_at
     ) {
     }
 
@@ -75,9 +75,9 @@ class User
     /**
      * Get Updated At
      *
-     * @return UserUpdatedAt|null
+     * @return UserUpdatedAt
      */
-    public function updatedAt(): ?UserUpdatedAt
+    public function updatedAt(): UserUpdatedAt
     {
         return $this->updated_at;
     }
@@ -85,9 +85,9 @@ class User
     /**
      * Get Deleted At
      *
-     * @return UserDeletedAt|null
+     * @return UserDeletedAt
      */
-    public function deletedAt(): ?UserDeletedAt
+    public function deletedAt(): UserDeletedAt
     {
         return $this->deleted_at;
     }
@@ -99,8 +99,8 @@ class User
      * @param UserName $name
      * @param UserEmail $email
      * @param UserCreatedAt $created_at
-     * @param UserUpdatedAt|null $updated_at
-     * @param UserDeletedAt|null $deleted_at
+     * @param UserUpdatedAt $updated_at
+     * @param UserDeletedAt $deleted_at
      * @return User
      */
     public static function create(
@@ -108,8 +108,8 @@ class User
         UserName $name,
         UserEmail $email,
         UserCreatedAt $created_at,
-        UserUpdatedAt $updated_at = null,
-        UserDeletedAt $deleted_at = null
+        UserUpdatedAt $updated_at,
+        UserDeletedAt $deleted_at
     ): User {
         return new self(
             id: $id,

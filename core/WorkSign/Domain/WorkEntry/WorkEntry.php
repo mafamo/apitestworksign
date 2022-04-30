@@ -19,19 +19,19 @@ class WorkEntry
      * @param WorkEntryId $id
      * @param WorkEntryUserId $user_id
      * @param WorkEntryStartDate $start_date
+     * @param WorkEntryEndDate $end_date
      * @param WorkEntryCreatedAt $created_at
-     * @param WorkEntryUpdatedAt|null $updated_at
-     * @param WorkEntryEndDate|null $end_date
-     * @param WorkEntryDeletedAt|null $deleted_at
+     * @param WorkEntryUpdatedAt $updated_at
+     * @param WorkEntryDeletedAt $deleted_at
      */
     public function __construct(
         private WorkEntryId $id,
         private WorkEntryUserId $user_id,
         private WorkEntryStartDate $start_date,
+        private WorkEntryEndDate $end_date,
         private WorkEntryCreatedAt $created_at,
-        private ?WorkEntryUpdatedAt $updated_at,
-        private ?WorkEntryEndDate $end_date,
-        private ?WorkEntryDeletedAt $deleted_at
+        private WorkEntryUpdatedAt $updated_at,
+        private WorkEntryDeletedAt $deleted_at
     ) {
     }
 
@@ -68,9 +68,9 @@ class WorkEntry
     /**
      * Get End Date
      *
-     * @return WorkEntryEndDate|null
+     * @return WorkEntryEndDate
      */
-    public function endDate(): ?WorkEntryEndDate
+    public function endDate(): WorkEntryEndDate
     {
         return $this->end_date;
     }
@@ -88,9 +88,9 @@ class WorkEntry
     /**
      * Get updated at
      *
-     * @return WorkEntryUpdatedAt|null
+     * @return WorkEntryUpdatedAt
      */
-    public function updatedAt(): ?WorkEntryUpdatedAt
+    public function updatedAt(): WorkEntryUpdatedAt
     {
         return $this->updated_at;
     }
@@ -98,9 +98,9 @@ class WorkEntry
     /**
      * Get Deleted At
      *
-     * @return WorkEntryDeletedAt|null
+     * @return WorkEntryDeletedAt
      */
-    public function deletedAt(): ?WorkEntryDeletedAt
+    public function deletedAt(): WorkEntryDeletedAt
     {
         return $this->deleted_at;
     }
@@ -112,27 +112,27 @@ class WorkEntry
      * @param WorkEntryUserId $user_id
      * @param WorkEntryStartDate $start_date
      * @param WorkEntryCreatedAt $created_at
-     * @param WorkEntryUpdatedAt|null $updated_at
-     * @param WorkEntryEndDate|null $end_date
-     * @param WorkEntryDeletedAt|null $deleted_at
+     * @param WorkEntryUpdatedAt $updated_at
+     * @param WorkEntryEndDate $end_date
+     * @param WorkEntryDeletedAt $deleted_at
      * @return WorkEntry
      */
     public static function create(
         WorkEntryId $id,
         WorkEntryUserId $user_id,
         WorkEntryStartDate $start_date,
+        WorkEntryEndDate $end_date,
         WorkEntryCreatedAt $created_at,
-        WorkEntryUpdatedAt $updated_at = null,
-        WorkEntryEndDate $end_date = null,
-        WorkEntryDeletedAt $deleted_at = null
+        WorkEntryUpdatedAt $updated_at,
+        WorkEntryDeletedAt $deleted_at
     ): WorkEntry {
         return new self(
             id: $id,
             user_id: $user_id,
             start_date: $start_date,
+            end_date: $end_date,
             created_at: $created_at,
             updated_at: $updated_at,
-            end_date: $end_date,
             deleted_at: $deleted_at
         );
     }

@@ -6,7 +6,7 @@ use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryId;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryUserId;
 use Core\WorkSign\Domain\WorkEntry\WorkEntry;
 
-interface WorkEntryRepositoryContract
+interface WorkEntryRepositoryInterface
 {
     /**
      * Get WorkEntry by id

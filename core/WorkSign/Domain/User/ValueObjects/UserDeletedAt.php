@@ -7,12 +7,12 @@ use InvalidArgumentException;
 
 final class UserDeletedAt
 {
-    private DateTime $value;
+    private ?DateTime $value;
 
-    public function __construct(string $deleted_at)
+    public function __construct(?string $deleted_at)
     {
         try {
-            $this->value = new DateTime($deleted_at);
+            $this->value = is_null($deleted_at) ? null : new DateTime($deleted_at);
         } catch (\Throwable $th) {
             throw new InvalidArgumentException(
                 sprintf('%s does not allow the value %s', self::class, $deleted_at)
@@ -23,10 +23,10 @@ final class UserDeletedAt
     /**
      * Get Value
      *
-     * @return string
+     * @return string|null
      */
-    public function value(): string
+    public function value(): ?string
     {
-        return $this->value->format('Y-m-d H:i:s');
+        return $this->value?->format('Y-m-d H:i:s');
     }
 }
