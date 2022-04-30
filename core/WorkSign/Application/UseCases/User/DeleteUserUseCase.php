@@ -16,11 +16,13 @@ class DeleteUserUseCase
      * Delete user
      *
      * @param integer $id
-     * @return void
+     * @return boolean
      */
-    public function __invoke(int $id): void
+    public function __invoke(int $id): bool
     {
         $userId = new UserId($id);
         $this->repository->delete($userId);
+
+        return true;
     }
 }

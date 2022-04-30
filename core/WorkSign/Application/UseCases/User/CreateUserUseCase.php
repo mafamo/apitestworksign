@@ -24,12 +24,12 @@ class CreateUserUseCase
      *
      * @param string $name
      * @param string $email
-     * @return void
+     * @return UserId
      */
     public function __invoke(
         string $name,
         string $email,
-    ): void {
+    ): UserId {
         $user = User::create(
             id: new UserId(),
             name: new UserName($name),
@@ -38,6 +38,7 @@ class CreateUserUseCase
             updated_at: new UserUpdatedAt((new DateTime())->format('Y-m-d H:i:s')),
             deleted_at: new UserDeletedAt()
         );
-        $this->repository->create($user);
+
+        return $this->repository->create($user);
     }
 }
