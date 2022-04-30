@@ -28,9 +28,9 @@ interface WorkEntryRepositoryInterface
      * Create a WorkEntry
      *
      * @param WorkEntry $work_entry
-     * @return boolean
+     * @return WorkEntryId
      */
-    public function create(WorkEntry $work_entry): bool;
+    public function create(WorkEntry $work_entry): WorkEntryId;
 
     /**
      * Delete a WorkEntry by id
