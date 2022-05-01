@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteUserController
 {
@@ -38,12 +39,14 @@ class DeleteUserController
             $id = $request->input('id');
             $userToDelete = $this->getUserByIdUseCase->__invoke($id);
             if (!$userToDelete) {
-                throw new Exception('The user not exists', SymfonyResponse::HTTP_NOT_FOUND);
+                throw new NotFoundHttpException('The user not exists');
             }
 
             return $this->deleteUserUseCase->__invoke($id);
         } catch (InvalidArgumentException $e) {
             throw new Exception($e->getMessage(), SymfonyResponse::HTTP_BAD_REQUEST);
+        } catch (NotFoundHttpException $e) {
+            throw new Exception($e->getMessage(), SymfonyResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), $th->getCode() ?? SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
         }

@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UpdateUserController
 {
@@ -39,7 +40,7 @@ class UpdateUserController
             $id = $request->input('id');
             $userToUpdate = $this->getUserByIdUseCase->__invoke($id);
             if (!$userToUpdate) {
-                throw new Exception('The user not exists', SymfonyResponse::HTTP_NOT_FOUND);
+                throw new NotFoundHttpException('The user not exists');
             }
             $userName = $request->input('name') ?? $userToUpdate->name()->value();
             $userEmail = $request->input('email') ?? $userToUpdate->email()->value();
@@ -48,6 +49,8 @@ class UpdateUserController
             return $this->getUserByIdUseCase->__invoke($id);
         } catch (InvalidArgumentException $e) {
             throw new Exception($e->getMessage(), SymfonyResponse::HTTP_BAD_REQUEST);
+        } catch (NotFoundHttpException $e) {
+            throw new Exception($e->getMessage(), SymfonyResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), $th->getCode() ?? SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
