@@ -9,6 +9,7 @@ use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryId;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryStartDate;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryUpdatedAt;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryUserId;
+use InvalidArgumentException;
 
 class WorkEntry
 {
@@ -33,6 +34,9 @@ class WorkEntry
         private WorkEntryUpdatedAt $updated_at,
         private WorkEntryDeletedAt $deleted_at
     ) {
+        if (!$this->validateDates($start_date, $end_date)) {
+            throw new InvalidArgumentException('The end date must be greater than start date');
+        }
     }
 
     /**
@@ -103,6 +107,26 @@ class WorkEntry
     public function deletedAt(): WorkEntryDeletedAt
     {
         return $this->deleted_at;
+    }
+
+    /**
+     * Validate dates of Entry
+     *
+     * @param WorkEntryStartDate $start_date
+     * @param WorkEntryEndDate $end_date
+     * @return boolean
+     */
+    private function validateDates(WorkEntryStartDate $start_date, WorkEntryEndDate $end_date): bool
+    {
+        if (
+            $start_date->value() &&
+            $end_date->value() &&
+            (strtotime($start_date->value()) > strtotime($end_date->value()))
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
