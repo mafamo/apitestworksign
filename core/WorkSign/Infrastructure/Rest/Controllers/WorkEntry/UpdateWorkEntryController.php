@@ -37,15 +37,15 @@ class UpdateWorkEntryController
             if (!$workEntryToUpdate) {
                 throw new Exception('The work entry not exists', SymfonyResponse::HTTP_NOT_FOUND);
             }
-            $user_id = $request->input('user_id') ?? $workEntryToUpdate->userId();
+            $user_id = $request->input('user_id') ?? $workEntryToUpdate->userId()?->value();
             if (!$user_id) {
                 $user = $this->getUserByIdUseCase->__invoke($user_id);
                 if (!$user) {
                     throw new Exception('The user not exists', SymfonyResponse::HTTP_NOT_FOUND);
                 }
             }
-            $start_date = $request->input('start_date') ?? $workEntryToUpdate->startDate();
-            $end_date = $request->input('end_date') ?? $workEntryToUpdate->endDate();
+            $start_date = $request->input('start_date') ?? $workEntryToUpdate->startDate()?->value();
+            $end_date = $request->input('end_date') ?? $workEntryToUpdate->endDate()?->value();
             $this->updateWorkEntryUseCase->__invoke($id, $user_id, $start_date, $end_date);
 
             return $this->getWorkEntryByIdUseCase->__invoke($id);

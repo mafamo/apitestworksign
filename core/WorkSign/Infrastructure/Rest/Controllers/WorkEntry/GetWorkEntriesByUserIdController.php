@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-class GetWorkEntriesByUserIdWorkEntryController
+class GetWorkEntriesByUserIdController
 {
     public function __construct(
         private GetWorkEntriesByUserIdUseCase $getWorkEntriesByUserIdUseCase,
