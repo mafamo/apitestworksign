@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CreateWorkEntryController
 {
@@ -47,6 +48,8 @@ class CreateWorkEntryController
             return $this->getWorkEntryByIdUseCase->__invoke($workEntryId->value());
         } catch (InvalidArgumentException $e) {
             throw new Exception($e->getMessage(), SymfonyResponse::HTTP_BAD_REQUEST);
+        } catch (NotFoundHttpException $e) {
+            throw new Exception($e->getMessage(), SymfonyResponse::HTTP_NOT_FOUND);
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), $th->getCode() ?? SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
         }

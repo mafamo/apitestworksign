@@ -13,6 +13,7 @@ use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryStartDate;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryUpdatedAt;
 use Core\WorkSign\Domain\WorkEntry\ValueObjects\WorkEntryUserId;
 use Core\WorkSign\Domain\WorkEntry\WorkEntry;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EloquentWorkEntryRepository implements WorkEntryRepositoryInterface
 {
@@ -28,6 +29,10 @@ class EloquentWorkEntryRepository implements WorkEntryRepositoryInterface
     public function get(WorkEntryId $id): ?WorkEntry
     {
         $workEntryEloquent = $this->eloquentWorkEntryModel->find($id->value());
+
+        if (!$workEntryEloquent) {
+            throw new NotFoundHttpException('The WorkEntry not exists');
+        }
 
         return WorkEntry::create(
             id: new WorkEntryId($workEntryEloquent->id),
