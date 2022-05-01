@@ -1,64 +1,117 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Prueba de un api rest para fichajes
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+El proyecto está realizado en Laravel 9 y por lo tanto necesita una versión superior a php 8.0.6. Para facilitar las cosas se entrega junto a los ficheros necesarios para generar su propia composición de contenedores con Docker. Es requisito que la máquina donde se pruebe tenga instalados tanto Docker como Docker Compose.
 
-## About Laravel
+## Instalación
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Docker
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para facilitar el uso con la aplicación se han añadido uns scripts shell, los más útiles son:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* _start_ Inicia el contenedor y si la imágen no existe la crea.
+* _shell_ Da acceso a la shell dentro del contenedor.
+* _stop_ Para el contenedor.
 
-## Learning Laravel
+### Laravel.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para terminar la instalación del proyecto hay que entrar en la shell del contenedor una vez iniciado este para ejecutar una serie de pasos:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1 _Instalación de dependencias_
 
-## Laravel Sponsors
+```BASH
+composer install
+```
+2 _Inicialización de la BBDD_
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```BASH
+php artisan migrate --seed
+```
 
-### Premium Partners
+## Uso
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Una vez terminada la instalación se pueden utilizar ya los puntos de acceso de la api en la ruta [http://localhost:8080](http://localhost:8080) y se puede ver la BBDD creada en un PHPMYADMIN accesible en [http://localhost:8081](http://localhost:8081).
 
-## Contributing
+Para facilitar las pruebas de los puntos de acceso se ha añadido un [proyecto](./Insomnia_ApiTestWorkSign.json) de [Insomnia](https://insomnia.rest/).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+No hay autentificación.
 
-## Code of Conduct
+Los puntos de acceso creados son los siquientes.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* GET User
 
-## Security Vulnerabilities
+    GET http://localhost:8080/api/user/{user_id}
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* CREATE User
 
-## License
+    POST http://localhost:8080/api/user/create
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    PARAMS:
+    ```JSON
+    {
+        "name": "Test",
+        "email": "test@test.com"
+    }
+    ```
+* DELETE User
+
+    DELETE http://localhost:8080/api/user/{user_id}
+
+* UPDATE User
+
+    PUT http://localhost:8080/api/user/{user_id}
+
+    PARAMS:
+
+    ```JSON
+    {
+	    "name": "Test updated",
+	    "email": "test1update@test.com"
+    }
+    ```
+* GET ALL Users
+
+    GET http://localhost:8080/api/user/all
+
+* GET WorkEntry
+
+    GET http://localhost:8080/api/workentry/{workentry_id}
+
+* CREATE WorkEntry
+
+    POST http://localhost:8080/api/workentry/create
+
+    PARAMS:
+
+    ```JSON
+    {
+	    "user_id": 2,
+	    "start_date": "2022-05-01 10:00:00",
+	    "end_date": "2022-05-01 18:00:00"
+    }
+    ```
+* DELETE WorkEntry
+
+    DELETE http://localhost:8080/api/workentry/{workentry_id}
+
+* UPDATE WorkEntry
+
+    PUT http://localhost:8080/api/workentry/{workentry_id}
+
+    PARAMS:
+
+    ```JSON
+    {
+	    "user_id": 2,
+	    "start_date": "2022-05-01 10:00:00",
+	    "end_date": "2022-05-01 18:00:00"
+    }
+    ```
+* GET BY USER WorkEntries
+
+    GET http://localhost:8080/api/workentry/user/{user_id}
+
+Además también se han creado unos pocos test de aceptación que se pueden ejecutar dentro de la shell del contenedor de la siguiente forma:
+
+```BASH
+php artisan test
+```
