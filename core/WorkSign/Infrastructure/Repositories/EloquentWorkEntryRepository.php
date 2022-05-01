@@ -70,7 +70,7 @@ class EloquentWorkEntryRepository implements WorkEntryRepositoryInterface
             'created_at' => $work_entry->createdAt()->value(),
             'updated_at' => $work_entry->updatedAt()->value()
         ];
-        $eloquentWorkEntryNew->create($data);
+        $eloquentWorkEntryNew = $eloquentWorkEntryNew->create($data);
 
         return new WorkEntryId($eloquentWorkEntryNew->id);
     }
