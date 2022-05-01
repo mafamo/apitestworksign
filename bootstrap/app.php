@@ -11,6 +11,11 @@
 |
 */
 
+use Core\WorkSign\Domain\User\Contracts\UserRepositoryInterface;
+use Core\WorkSign\Domain\WorkEntry\Contracts\WorkEntryRepositoryInterface;
+use Core\WorkSign\Infrastructure\Repositories\EloquentUserRepository;
+use Core\WorkSign\Infrastructure\Repositories\EloquentWorkEntryRepository;
+
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
@@ -51,5 +56,8 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+
+$app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
+$app->bind(WorkEntryRepositoryInterface::class, EloquentWorkEntryRepository::class);
 
 return $app;
