@@ -12,6 +12,10 @@ class User extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'name', 'email', 'created_at', 'updated_at',
+    ];
+
     /**
      * Get WorkEntries relationship
      *

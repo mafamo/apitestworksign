@@ -17,6 +17,10 @@ class WorkEntry extends Model
         'end_date' => 'datetime',
     ];
 
+    protected $fillable = [
+        'user_id', 'start_date', 'end_date', 'created_at', 'updated_at',
+    ];
+
     /**
      * Get user relationship
      *
