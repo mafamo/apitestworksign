@@ -11,6 +11,7 @@ use Core\WorkSign\Domain\User\ValueObjects\UserEmail;
 use Core\WorkSign\Domain\User\ValueObjects\UserId;
 use Core\WorkSign\Domain\User\ValueObjects\UserName;
 use Core\WorkSign\Domain\User\ValueObjects\UserUpdatedAt;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EloquentUserRepository implements UserRepositoryInterface
 {
@@ -26,13 +27,17 @@ class EloquentUserRepository implements UserRepositoryInterface
     {
         $userEloquent = $this->eloquentUserModel->find($id->value());
 
+        if (!$userEloquent) {
+            throw new NotFoundHttpException('The user not exists');
+        }
+
         return User::create(
             id: new UserId($userEloquent->id),
             name: new UserName($userEloquent->name),
             email: new UserEmail($userEloquent->email),
             created_at: new UserCreatedAt($userEloquent->created_at?->format('Y-m-d H:i:s')),
             updated_at: new UserUpdatedAt($userEloquent->updated_at?->format('Y-m-d H:i:s')),
-            deleted_at: new UserDeletedAt($userEloquent->created_at?->format('Y-m-d H:i:s'))
+            deleted_at: new UserDeletedAt($userEloquent->deleted_at?->format('Y-m-d H:i:s'))
         );
     }
 
@@ -45,12 +50,12 @@ class EloquentUserRepository implements UserRepositoryInterface
         $userCollectionEloquent = $this->eloquentUserModel->all()->toArray();
         foreach ($userCollectionEloquent as $userEloquent) {
             $result[] = User::create(
-                id: new UserId($userEloquent->id),
-                name: new UserName($userEloquent->name),
-                email: new UserEmail($userEloquent->email),
-                created_at: new UserCreatedAt($userEloquent->created_at?->format('Y-m-d H:i:s')),
-                updated_at: new UserUpdatedAt($userEloquent->updated_at?->format('Y-m-d H:i:s')),
-                deleted_at: new UserDeletedAt($userEloquent->created_at?->format('Y-m-d H:i:s'))
+                id: new UserId($userEloquent['id']),
+                name: new UserName($userEloquent['name']),
+                email: new UserEmail($userEloquent['email']),
+                created_at: new UserCreatedAt($userEloquent['created_at']),
+                updated_at: new UserUpdatedAt($userEloquent['updated_at']),
+                deleted_at: new UserDeletedAt($userEloquent['deleted_at'])
             );
         }
 
@@ -85,7 +90,7 @@ class EloquentUserRepository implements UserRepositoryInterface
             'created_at' => $user->updatedAt()->value(),
             'updated_at' => $user->updatedAt()->value()
         ];
-        $eloquentUserNew->create($data);
+        $eloquentUserNew = $eloquentUserNew->create($data);
 
         return new UserId($eloquentUserNew->id);
     }
