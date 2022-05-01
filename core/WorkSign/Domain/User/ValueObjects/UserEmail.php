@@ -32,9 +32,9 @@ final class UserEmail
     /**
      * Get Value
      *
-     * @return integer
+     * @return string
      */
-    public function value(): int
+    public function value(): string
     {
         return $this->value;
     }
